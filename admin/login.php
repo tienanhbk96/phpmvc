@@ -8,7 +8,7 @@
 		$adminPassword = $_POST['adminPassword'];
 	}
 
-	$login_check = $class->login_admin($adminUser, $adminPassword);
+	$login_check = $class->login_admin($adminUser, $adminPass);
 ?>
 <!DOCTYPE html>
 <head>
