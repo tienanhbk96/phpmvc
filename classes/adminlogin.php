@@ -10,14 +10,14 @@
         private $db;
         private $fm;
 
-        public function _construct(){
+        public function __construct(){
             $this->db = new Database();
             $this->fm = new Format();
         }
-
+            
         public function login_admin($adminUser, $adminPass){
             $adminUser = $this->fm->validation($adminUser);
-            $adminPass = $this->fm->validation($adminPass);
+			$adminPass = $this->fm->validation($adminPass);
 
             $adminUser = mysqli_real_escape_string($this->db->link, $adminUser);
             $adminPass = mysqli_real_escape_string($this->db->link, $adminPass);
@@ -32,9 +32,9 @@
                 if($result != false){
                     $value = $result->fetch_assoc();
                     Session::set('adminlogin', true);
-                    Session::get('adminId', $value['adminId']);
-                    Session::get('adminUser', $value['adminUser']);
-                    Session::get('adminName', $value['adminName']);
+                    Session::set('adminId', $value['adminId']);
+                    Session::set('adminUser', $value['adminUser']);
+                    Session::set('adminName', $value['adminName']);
                     header('Location:index.php');
                 }else{
                     $alert = "User and Pass must be not match" ;
