@@ -20,12 +20,20 @@
 					<tbody>
 						<?php 
 							$show_cat = $cat->show_category();
+							if(isset($show_cat)){
+								$i = 0;
+								while($result = $show_cat->fetch_assoc()){
+									$i++;
 						?>
-						<tr class="odd gradeX">
-							<td>01</td>
-							<td>Internet</td>
-							<td><a href="">Edit</a> || <a href="">Delete</a></td>
-						</tr>
+									<tr class="odd gradeX">
+										<td><?php echo $i ?></td>
+										<td><?php echo $result['catName'] ?></td>
+										<td><a href="">Edit</a> || <a href="">Delete</a></td>
+									</tr>
+						<?php 
+								} 
+							}
+						?>
 					</tbody>
 				</table>
                </div>
