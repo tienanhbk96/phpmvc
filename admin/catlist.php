@@ -28,7 +28,7 @@
 									<tr class="odd gradeX">
 										<td><?php echo $i ?></td>
 										<td><?php echo $result['catName'] ?></td>
-										<td><a href="">Edit</a> || <a href="">Delete</a></td>
+										<td><a href="catedit.php?catid=<?php echo $result['catId'] ?>">Edit</a> || <a href="?catid=<?php echo $result['catId'] ?>">Delete</a></td>
 									</tr>
 						<?php 
 								} 
