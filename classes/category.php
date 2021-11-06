@@ -40,10 +40,42 @@
             return $result;
         }
 
+        public function update_category($id, $catName){
+            $catName = $this->fm->validation($catName);
+            $catName = mysqli_real_escape_string($this->db->link, $catName);
+
+            if(empty($catName)){
+                $alert = "<span class='error'>Category must be not empty</span>";
+                return $alert;
+            }else{
+                $query = "UPDATE tbl_category SET catName = '$catName' WHERE catId = '$id'";
+                $result = $this->db->update($query);
+                if($result){
+                    $alert = "<span class='success'>Category Update Successfully</span>";
+                    return $alert;
+                }else{
+                    $alert = "<span class='error'>Category Update  not Success</span>";
+                    return $alert;
+                }
+            }
+        }
+
         public function getcatbyId($id){
             $query = "SELECT * FROM tbl_category WHERE catId = $id";
             $result = $this->db->select($query);
             return $result;
+        }
+
+        public function delete_category($id){
+            $query = "DELETE FROM tbl_category WHERE catId = $id";
+            $result = $this->db->delete($query);
+            if($result){
+                $alert = "<span class='success'>Category Delete Successfully</span>";
+                return $alert;
+            }else{
+                $alert = "<span class='error'>Category Delete not Success</span>";
+                return $alert;
+            }
         }
     }
 
