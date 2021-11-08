@@ -13,22 +13,39 @@
             $this->fm = new Format();
         }
             
-        public function insert_product($catName){
-            $catName = $this->fm->validation($catName);
+        public function insert_product($data){
+            $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
+            $category = mysqli_real_escape_string($this->db->link, $data['category']);
+            $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
+            $product_desc = mysqli_real_escape_string($this->db->link, $data['product_desc']);
+            $price = mysqli_real_escape_string($this->db->link, $data['price']);
+            $type = mysqli_real_escape_string($this->db->link, $data['type']);
+            
+            $permited  = array('jpg', 'jpeg', 'png', 'gif');
+			$file_name = $_FILES['image']['name'];
+			$file_size = $_FILES['image']['size'];
+			$file_temp = $_FILES['image']['tmp_name'];
 
-            $catName = mysqli_real_escape_string($this->db->link, $catName);
+			$div = explode('.', $file_name);
+			$file_ext = strtolower(end($div));
+			$unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+			$uploaded_image = "uploads/".$unique_image;
 
-            if(empty($catName)){
-                $alert = "<span class='error'>Category must be not empty</span>";
+            if($productName == "" || $category == "" || $brand == "" || $product_desc == "" || $price == "" || $type == "" || $file_name == ""){
+                $alert = "<span class='error'>File must be not empty</span>";
                 return $alert;
             }else{
-                $query = "INSERT INTO tbl_category(catName) VALUES('$catName')";
+                move_uploaded_file($file_temp, $uploaded_image);
+
+                $query = "INSERT INTO tbl_product(productName, catId, brandId, product_desc, type, price, image
+                ) VALUES('$productName', '$category', '$brand', ' $product_desc', '$price', '$type', '$unique_image')";
                 $result = $this->db->insert($query);
+
                 if($result){
-                    $alert = "<span class='success'>Insert Category Successfully</span>";
+                    $alert = "<span class='success'>Insert Product Successfully</span>";
                     return $alert;
                 }else{
-                    $alert = "<span class='error'>Insert Category not Success</span>";
+                    $alert = "<span class='error'>Insert Product not Success</span>";
                     return $alert;
                 }
             }

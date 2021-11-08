@@ -2,11 +2,24 @@
 <?php include 'inc/sidebar.php';?>
 <?php include_once '../classes/brand.php';?>
 <?php include_once '../classes/category.php';?>
+<?php include_once '../classes/product.php';?>
+<?php
+    $product = new product();
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){
+        
+        $insertProduct = $product->insert_product($_POST);
+    }
+?>
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Thêm sản phẩm</h2>
-        <div class="block">               
-         <form action="" method="post" enctype="multipart/form-data">
+        <div class="block">     
+           <?php
+                if(isset($insertProduct)){
+                    echo $insertProduct;
+                }   
+            ?>     
+         <form action="productadd.php" method="post" enctype="multipart/form-data">
             <table class="form">
                
                 <tr>
