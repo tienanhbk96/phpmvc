@@ -8,11 +8,19 @@ class Format{
 		return date('F j, Y, g:i a', strtotime($date));
 	}
 
-	public function textShorten($text, $limit = 400){
+	public function textShorten($text, $limit = 50){
 		$text = $text. " ";
 		$text = substr($text, 0, $limit);
 		$text = substr($text, 0, strrpos($text, ' '));
 		$text = $text.".....";
+		
+		return $text;
+	}
+
+	public function textShorten_product($text, $limit = 50){
+		if (strlen($text) >= $limit){
+			$text = substr($text, 0, $limit). "...";
+		}
 		return $text;
 	}
 

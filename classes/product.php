@@ -32,12 +32,12 @@
 			$uploaded_image = "uploads/".$unique_image;
 
             if($productName == "" || $category == "" || $brand == "" || $product_desc == "" || $price == "" || $type == "" || $file_name == ""){
-                $alert = "<span class='error'>File must be not empty</span>";
+                $alert = "<span class='error'>Product must be not empty</span>";
                 return $alert;
             }else{
                 move_uploaded_file($file_temp, $uploaded_image);
 
-                $query = "INSERT INTO tbl_product(productName, catId, brandId, product_desc, type, price, image
+                $query = "INSERT INTO tbl_product(productName, catId, brandId, product_desc, price, type, image
                 ) VALUES('$productName', '$category', '$brand', ' $product_desc', '$price', '$type', '$unique_image')";
                 $result = $this->db->insert($query);
 
@@ -51,49 +51,105 @@
             }
         }
 
-        // public function show_category(){
-        //     $query = "SELECT * FROM tbl_category order by catId desc";
-        //     $result = $this->db->select($query);
-        //     return $result;
-        // }
+        public function show_product(){
+            $query = " SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName
+                        FROM tbl_product INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId
+                        INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
+                        order by tbl_product.productId desc";
+            $result = $this->db->select($query);
+            return $result;
+        }
 
-        // public function update_category($id, $catName){
-        //     $catName = $this->fm->validation($catName);
-        //     $catName = mysqli_real_escape_string($this->db->link, $catName);
+        public function update_product($data, $id){
+            $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
+            $category = mysqli_real_escape_string($this->db->link, $data['category']);
+            $brand = mysqli_real_escape_string($this->db->link, $data['brand']);
+            $product_desc = mysqli_real_escape_string($this->db->link, $data['product_desc']);
+            $price = mysqli_real_escape_string($this->db->link, $data['price']);
+            $type = mysqli_real_escape_string($this->db->link, $data['type']);
+            
+            $permited  = array('jpg', 'jpeg', 'png', 'gif');
+			$file_name = $_FILES['image']['name'];
+			$file_size = $_FILES['image']['size'];
+			$file_temp = $_FILES['image']['tmp_name'];
 
-        //     if(empty($catName)){
-        //         $alert = "<span class='error'>Category must be not empty</span>";
-        //         return $alert;
-        //     }else{
-        //         $query = "UPDATE tbl_category SET catName = '$catName' WHERE catId = '$id'";
-        //         $result = $this->db->update($query);
-        //         if($result){
-        //             $alert = "<span class='success'>Category Update Successfully</span>";
-        //             return $alert;
-        //         }else{
-        //             $alert = "<span class='error'>Category Update  not Success</span>";
-        //             return $alert;
-        //         }
-        //     }
-        // }
+			$div = explode('.', $file_name);
+			$file_ext = strtolower(end($div));
+			$unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+			$uploaded_image = "uploads/".$unique_image;
 
-        // public function getcatbyId($id){
-        //     $query = "SELECT * FROM tbl_category WHERE catId = $id";
-        //     $result = $this->db->select($query);
-        //     return $result;
-        // }
+      
 
-        // public function delete_category($id){
-        //     $query = "DELETE FROM tbl_category WHERE catId = $id";
-        //     $result = $this->db->delete($query);
-        //     if($result){
-        //         $alert = "<span class='success'>Category Delete Successfully</span>";
-        //         return $alert;
-        //     }else{
-        //         $alert = "<span class='error'>Category Delete not Success</span>";
-        //         return $alert;
-        //     }
-        // }
+            if($productName == "" || $category == "" || $brand == "" || $product_desc == "" || $price == "" || $type == ""){
+                $alert = "<span class='error'>Product must be not empty</span>";
+                return $alert;
+            }else{
+                if(!empty($file_name)){
+                    //Nếu người dùng chọn ảnh
+                    if ($file_size > 20480) { 
+                        $alert = "<span class='success'>Image Size should be less then 2MB!</span>";
+                        return $alert;
+                    } 
+                    elseif (in_array($file_ext, $permited) === false){
+                        // echo "<span class='error'>You can upload only:-".implode(', ', $permited)."</span>";	
+                        $alert = "<span class='success'>You can upload only:-".implode(', ', $permited)."</span>";
+                        return $alert;
+                    }
+                    $query = "UPDATE tbl_product SET 
+                            productName = $productName,
+                            catId = $category, 
+                            brandId = $brand, 
+                            product_desc = $product_desc, 
+                            price = $price, 
+                            type = $type,
+                            image = $unique_image,
+                            WHERE productId = $id ";
+
+                }else{
+                    //Nếu người dùng không chọn ảnh
+                    $query = "UPDATE tbl_product SET 
+                            productName = $productName,
+                            catId = $category, 
+                            brandId = $brand, 
+                            product_desc = $product_desc, 
+                            price = $price, 
+                            type = $type,
+                            image = $unique_image,
+                            WHERE productId = $id ";
+                }
+                
+                $result = $this->db->update($query);
+                if($result){
+                    $alert = "<span class='success'>Product Update Successfully</span>";
+                    return $alert;
+                }else{
+                    $alert = "<span class='error'>Product Update  not Success</span>";
+                    return $alert;
+                }
+            }
+        }
+
+        public function getproductbyId($id){
+            // $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName
+            //         FROM tbl_product INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId
+            //         INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
+            //         WHERE tbl_product.productId = $id";
+            $query = "SELECT * FROM tbl_product where productId = $id ";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function delete_product($id){
+            $query = "DELETE FROM tbl_product WHERE productId = $id";
+            $result = $this->db->delete($query);
+            if($result){
+                $alert = "<span class='success'>Product Delete Successfully</span>";
+                return $alert;
+            }else{
+                $alert = "<span class='error'>Product Delete not Success</span>";
+                return $alert;
+            }
+        }
     }
 
 
