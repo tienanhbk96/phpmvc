@@ -86,7 +86,7 @@
             }else{
                 if(!empty($file_name)){
                     //Nếu người dùng chọn ảnh
-                    if ($file_size > 20480) { 
+                    if ($file_size > 204800000) { 
                         $alert = "<span class='success'>Image Size should be less then 2MB!</span>";
                         return $alert;
                     } 
@@ -95,27 +95,28 @@
                         $alert = "<span class='success'>You can upload only:-".implode(', ', $permited)."</span>";
                         return $alert;
                     }
+					move_uploaded_file($file_temp,$uploaded_image);
                     $query = "UPDATE tbl_product SET 
-                            productName = $productName,
-                            catId = $category, 
-                            brandId = $brand, 
-                            product_desc = $product_desc, 
-                            price = $price, 
-                            type = $type,
-                            image = $unique_image,
-                            WHERE productId = $id ";
+                    productName = '$productName',
+                    catId = '$category', 
+                    brandId = '$brand', 
+                    product_desc = '$product_desc', 
+                    price = '$price', 
+                    type = '$type',
+                    image = '$unique_image'
 
+                    WHERE productId = '$id' ";
                 }else{
                     //Nếu người dùng không chọn ảnh
                     $query = "UPDATE tbl_product SET 
-                            productName = $productName,
-                            catId = $category, 
-                            brandId = $brand, 
-                            product_desc = $product_desc, 
-                            price = $price, 
-                            type = $type,
-                            image = $unique_image,
-                            WHERE productId = $id ";
+                    productName = '$productName',
+                    catId = '$category', 
+                    brandId = '$brand', 
+                    product_desc = '$product_desc', 
+                    price = '$price', 
+                    type = '$type'
+
+                    WHERE productId = $id ";
                 }
                 
                 $result = $this->db->update($query);

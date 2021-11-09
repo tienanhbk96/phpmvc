@@ -5,12 +5,22 @@
 <?php include_once '../classes/product.php' ;?>
 <?php include_once '../helpers/format.php' ;?>
 
-<?php $product = new product(); ?>
+<?php $product = new product(); 
+	if(isset($_GET['delid'])){
+		$id = $_GET['delid'];
+		$delete_product = $product->delete_product($id);
+	}
+?>
 <?php $fm = new Format(); ?>
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Product List</h2>
         <div class="block">  
+			<?php 
+				if(isset($delete_product)){
+					echo $delete_product;
+				}
+			?>
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
@@ -50,7 +60,7 @@
 					
 					?></td>
 					
-					<td><a href="productedit.php?productid=<?php echo $result['productId'] ?>">Edit</a> || <a href="">Delete</a></td>
+					<td><a href="productedit.php?productid=<?php echo $result['productId'] ?>">Edit</a> || <a onclick="return confirm('Are you want to delete')" href="?delid=<?php echo $result['productId'] ?>">Delete</a></td>
 				</tr>
 				<?php
 						}

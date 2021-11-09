@@ -5,20 +5,25 @@
 <?php include_once '../classes/product.php';?>
 <?php
     $product = new product();
+    
     if(!isset($_GET['productid']) || $_GET['productid'] == NULL){
         echo "<script> window.location = 'productlist.php'</script>";
     }else{
         $id = $_GET['productid'];
-        $show_product = $product->getproductbyId($id);
-
-        if(isset($show_product)){
-            $view_product = $show_product->fetch_assoc();
-        }
+        
     }
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])){
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){
         
         $updateProduct = $product->update_product($_POST, $id);
     }
+
+    $show_product = $product->getproductbyId($id);
+
+    if(isset($show_product)){
+        $view_product = $show_product->fetch_assoc();
+    }
+
 ?>
 <div class="grid_10">
     <div class="box round first grid">
@@ -107,7 +112,7 @@
                     </td>
                     <td>
                         <img src="uploads/<?php echo $view_product['image'] ?>" style="width: 100px"/><br>
-                        <input type="file" name="image" />
+                        <input accept='.jpg,.png,.gif,.pdf,.eps' type="file" name="image" />
                     </td> 
                 </tr>
 				
