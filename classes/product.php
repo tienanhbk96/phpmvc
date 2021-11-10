@@ -1,6 +1,7 @@
 <?php
-    include_once '../lib/database.php';
-    include_once '../helpers/format.php';
+    $filepath = realpath(dirname(__FILE__));
+    include_once ($filepath.'/../lib/database.php');
+    include_once ($filepath.'/../helpers/format.php');
 ?>
 
 <?php
@@ -78,7 +79,6 @@
 			$unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
 			$uploaded_image = "uploads/".$unique_image;
 
-      
 
             if($productName == "" || $category == "" || $brand == "" || $product_desc == "" || $price == "" || $type == ""){
                 $alert = "<span class='error'>Product must be not empty</span>";
@@ -95,6 +95,7 @@
                         $alert = "<span class='success'>You can upload only:-".implode(', ', $permited)."</span>";
                         return $alert;
                     }
+                    unlink($data['old_image']);
 					move_uploaded_file($file_temp,$uploaded_image);
                     $query = "UPDATE tbl_product SET 
                     productName = '$productName',
@@ -141,9 +142,14 @@
         }
 
         public function delete_product($id){
+            $query_old_image = "SELECT image FROM tbl_product WHERE productId = $id";
+            $result_old_image = $this->db->select($query_old_image)->fetch_assoc();
+            $result_old_image = 'uploads/'.$result_old_image['image'];
+            
             $query = "DELETE FROM tbl_product WHERE productId = $id";
             $result = $this->db->delete($query);
             if($result){
+                unlink($result_old_image);
                 $alert = "<span class='success'>Product Delete Successfully</span>";
                 return $alert;
             }else{
@@ -151,6 +157,22 @@
                 return $alert;
             }
         }
+
+        //END BACKEND
+
+        public function getproduct_feathered(){
+            $query = "SELECT * FROM tbl_product where type = '1' LIMIT 4";
+            $result = $this->db->select($query);
+            return $result;
+        }
+        public function getproduct_new(){
+            $query = "SELECT * FROM tbl_product order by productId desc LIMIT 4";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+
+
     }
 
 
