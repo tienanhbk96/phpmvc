@@ -111,7 +111,8 @@
                         <label>Upload Image</label>
                     </td>
                     <td>
-                        <img src="uploads/<?php echo $view_product['image'] ?>" style="width: 100px"/><br>
+                        <input type="text" type="image" value="uploads/<?php echo $view_product['image'] ?>" name="old_image" style="display:none" >
+                        <image src="uploads/<?php echo $view_product['image'] ?>" style="width: 100px"/><br>
                         <input accept='.jpg,.png,.gif,.pdf,.eps' type="file" name="image" />
                     </td> 
                 </tr>

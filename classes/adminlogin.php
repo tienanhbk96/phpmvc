@@ -1,8 +1,9 @@
 <?php
-    include '../lib/database.php';
-    include '../lib/session.php';
-    session::checkLogin();
-    include '../helpers/format.php';
+    $filepath = realpath(dirname(__FILE__));
+    include ($filepath.'/../lib/session.php');
+    Session::checkLogin();
+    include_once($filepath.'/../lib/database.php');
+    include_once('../helpers/format.php');
 ?>
 
 <?php
