@@ -180,6 +180,29 @@
             return $result;
         }
 
+        public function getLastestDell(){
+            $query = "SELECT * FROM tbl_product WHERE brandId = '3' order by productId desc LIMIT 1 ";
+            $result =  $this->db->select($query);
+            return $result;
+        }
+
+        public function getLastestAssus(){
+            $query = "SELECT * FROM tbl_product WHERE brandId = '4' order by productId desc LIMIT 1 ";
+            $result =  $this->db->select($query);
+            return $result;
+        }
+
+        public function getLastestHp(){
+            $query = "SELECT * FROM tbl_product WHERE brandId = '5' order by productId desc LIMIT 1 ";
+            $result =  $this->db->select($query);
+            return $result;
+        }
+
+        public function getLastestMacbook(){
+            $query = "SELECT * FROM tbl_product WHERE brandId = '6' order by productId desc LIMIT 1 ";
+            $result =  $this->db->select($query);
+            return $result;
+        }
 
     }
 
