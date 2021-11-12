@@ -78,6 +78,19 @@
                 return $alert;
             }
         }
+
+        public function show_category_frontend(){
+            $query = "SELECT * FROM tbl_category order by catId desc";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        
+        public function get_product_by_cat($id){
+            $query = "SELECT * FROM tbl_product WHERE catId = '$id' order by catId desc LIMIT 8";
+            $result = $this->db->select($query);
+            return $result;
+        }
     }
 
 

@@ -52,12 +52,21 @@
                     <h2>Product Details</h2>
                     <p><?= $result['product_desc'] ?></p>
                 </div>
-
+                            
             </div>
             <div class="rightsidebar span_3_of_1">
                 <h2>CATEGORIES</h2>
                 <ul>
-                    <li><a href="productbycat.php">Mobile Phones</a></li>
+                    <?php
+                        $getall_category = $cat->show_category_frontend();
+                        if($getall_category){
+                            while($result = $getall_category->fetch_assoc()){
+                    ?>
+                            <li><a href="productbycat.php?catid=<?= $result['catId'] ?>"><?= $result['catName'] ?></a></li>
+                    <?php
+                            } 
+                        }
+                    ?>
                 </ul>
 
             </div>

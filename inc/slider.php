@@ -1,46 +1,67 @@
 <div class="header_bottom">
     <div class="header_bottom_left">
         <div class="section group">
+            <?php
+                $getLastestDell = $product->getLastestDell();
+                if(isset($getLastestDell)){
+                    $dell = $getLastestDell->fetch_assoc();
+                }
+
+                $getLastesAssus = $product->getLastestAssus();
+                if(isset($getLastesAssus)){
+                    $assus = $getLastesAssus->fetch_assoc();
+                }
+
+                $getLastestHp = $product->getLastestHp();
+                if(isset($getLastestHp)){
+                    $hp = $getLastestHp->fetch_assoc();
+                }
+
+                $getLastestMacbook = $product->getLastestMacbook();
+                if(isset($getLastestMacbook)){
+                    $macbook = $getLastestMacbook->fetch_assoc();
+                }
+            ?>
             <div class="listview_1_of_2 images_1_of_2">
                 <div class="listimg listimg_2_of_1">
-                    <a href="details.php"> <img src="images/pic4.png" alt="" /></a>
+                    <a href="details.php?proid=<?php echo $dell['productId'] ?>"> <img src="admin/uploads/<?= $dell['image'] ?>" alt="" /></a>
                 </div>
                 <div class="text list_2_of_1">
-                    <h2>Iphone</h2>
-                    <p>Lorem ipsum dolor sit amet sed do eiusmod.</p>
-                    <div class="button"><span><a href="details.php">Add to cart</a></span></div>
+                    <h2>Dell</h2>
+                    <p><?= $dell['productName'] ?></p>
+                    <div class="button"><span><a href="details.php?proid=<?php echo $dell['productId'] ?>">Add to cart</a></span></div>
                 </div>
             </div>
             <div class="listview_1_of_2 images_1_of_2">
                 <div class="listimg listimg_2_of_1">
-                    <a href="details.php"><img src="images/pic3.png" alt="" /></a>
+                    <a href="details.php?proid=<?php echo $assus['productId'] ?>"><img src="admin/uploads/<?= $assus['image'] ?>" alt="" /></a>
                 </div>
                 <div class="text list_2_of_1">
                     <h2>Samsung</h2>
-                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                    <div class="button"><span><a href="details.php">Add to cart</a></span></div>
+                    <p><?= $assus['productName'] ?></p>
+                    <div class="button"><span><a href="details.php?proid=<?php echo $assus['productId'] ?>">Add to cart</a></span></div>
                 </div>
             </div>
         </div>
         <div class="section group">
             <div class="listview_1_of_2 images_1_of_2">
                 <div class="listimg listimg_2_of_1">
-                    <a href="details.php"> <img src="images/pic3.jpg" alt="" /></a>
+                    <a href="details.php?proid=<?php echo $hp['productId'] ?>"> <img src="admin/uploads/<?= $hp['image'] ?>" alt="" /></a>
                 </div>
                 <div class="text list_2_of_1">
                     <h2>Acer</h2>
-                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                    <div class="button"><span><a href="details.php">Add to cart</a></span></div>
+                    <p><?= $hp['productName'] ?></p>
+                    <div class="button"><span><a href="details.php?proid=<?php echo $hp['productId'] ?>">Add to cart</a></span></div>
                 </div>
             </div>
             <div class="listview_1_of_2 images_1_of_2">
                 <div class="listimg listimg_2_of_1">
-                    <a href="details.php"><img src="images/pic1.png" alt="" /></a>
+                    <a href="details.php?proid=<?php echo $macbook['productId'] ?>"><img src="admin/uploads/<?= $macbook['image'] ?>" alt="" /></a>
                 </div>
                 <div class="text list_2_of_1">
                     <h2>Canon</h2>
-                    <p>Lorem ipsum dolor sit amet, sed do eiusmod.</p>
-                    <div class="button"><span><a href="details.php">Add to cart</a></span></div>
+                    <p><?= $macbook['productName'] ?></p>
+                    <div class="button"><span><a href="details.php?proid=<?php echo $macbook['productId'] ?>">Add to cart</a></span></div>
                 </div>
             </div>
         </div>
