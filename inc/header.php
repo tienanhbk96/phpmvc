@@ -17,6 +17,7 @@
 	$us = new user();
 	$br = new brand();
 	$cat = new category();
+	$cs = new customer();
 	$product = new product();
 ?>
 
@@ -88,7 +89,23 @@
                         </a>
                     </div>
                 </div>
-                <div class="login"><a href="login.php">Login</a></div>
+                <?php
+                    if(isset($_GET['customerid'])){
+                        $delCart = $ct->dell_all_data_cart();
+                        Session::destroy();
+                    }
+                ?>
+                <div class="login">
+                <?php
+                    $check_login = Session::get('customer_login');
+                    if($check_login == false){
+                        echo '<a href="login.php">Login</a>';
+                    }else{
+                        echo '<a href="?customerid='.Session::get('customer_id').'">Logout</a>';
+                    }
+                ?>
+                    
+                </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -98,7 +115,18 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="products.php">Products</a> </li>
                 <li><a href="topbrands.php">Top Brands</a></li>
-                <li><a href="cart.php">Cart</a></li>
+                <?php
+                    $check_cart = $ct->check_cart();
+                    if($check_cart){
+                        echo '<li><a href="cart.php">Cart</a></li>';
+                    }
+                ?>
+                <?php
+                    $check_login = Session::get('customer_login');
+                    if($check_login){
+                        echo '<li><a href="profile.php">Profile</a> </li>';
+                    }
+                ?>
                 <li><a href="contact.php">Contact</a> </li>
                 <div class="clear"></div>
             </ul>
