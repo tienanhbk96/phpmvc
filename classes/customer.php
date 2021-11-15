@@ -73,5 +73,43 @@
                 }
             }
         }
+
+        public function show_customers($id){
+            $query = "SELECT * FROM tbl_customer WHERE id= '$id'";
+            $result =  $this->db->select($query);
+            return $result;
+        }
+
+        public function update_customer($data, $id){
+            $name = mysqli_real_escape_string($this->db->link, $data['name']);
+            // $city = mysqli_real_escape_string($this->db->link, $data['city']);
+            $zipcode = mysqli_real_escape_string($this->db->link, $data['zipcode']);
+            $email = mysqli_real_escape_string($this->db->link, $data['email']);
+            $address = mysqli_real_escape_string($this->db->link, $data['address']);
+            $phone = mysqli_real_escape_string($this->db->link, $data['phone']);
+            
+            if($name == "" || $zipcode == "" || $email == "" || $address == "" || $phone == "" ){
+                $alert = "<span class='error'>Fields must be not empty</span>";
+                return $alert;
+            }else{
+                $query = "UPDATE tbl_customer SET
+                name = '$name',
+                zipCode = '$zipcode',
+                email = '$email',
+                address = '$address',
+                phone = '$phone'
+
+                WHERE id = '$id'";
+                $result = $this->db->update($query);
+
+                if($result){
+                    $alert = "<span class='success'>Customer Update Successfully</span>";
+                    return $alert;
+                }else{
+                    $alert = "<span class='error'>Customer Update not Success</span>";
+                    return $alert;
+                }
+            }
+        }
     }
 ?> 
