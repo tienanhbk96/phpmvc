@@ -7,7 +7,14 @@
      if($check_login == false){
          header('Location:login.php');
      }
-    
+
+	$ct = new cart();
+     if(isset($_GET['confirmid'])){
+		$id = $_GET['confirmid'];
+		$time = $_GET['time'];
+		$price = $_GET['price'];
+		$shifted_confirmed = $ct->shifted_confirmed($id, $time, $price);
+    }
 ?>
 <style>
     .box_left {
@@ -58,9 +65,14 @@
                                     <td><?php
                                             if($result['status'] == 0){
                                                 echo 'Pending';
-                                            }else{
-                                                echo 'Processed';
-                                            }
+                                            }else if($result['status'] == 1){
+                                        ?>
+                                        <a href="?confirmid=<?php echo $customer_id ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Shifted</a>
+
+                                        <?php
+                                        }else {
+                                            echo 'Confirmed';
+                                        }
                                         ?>
                                     </td>
                                     <?php

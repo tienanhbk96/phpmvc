@@ -15,14 +15,27 @@
 		$price = $_GET['price'];
 		$shifted = $ct->shifted($id, $time, $price);
     }
+
+	if(isset($_GET['delid'])){
+		$id = $_GET['delid'];
+		$time = $_GET['time'];
+		$price = $_GET['price'];
+		$del_shifted = $ct->del_shifted($id, $time, $price);
+    }
 ?>
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Inbox</h2>
                 <div class="block">
 					<?php
-						if($shifted){
+						if(isset($shifted)){
 							echo $shifted;
+						}
+					?>
+
+					<?php
+						if(isset($del_shifted)){
+							echo $del_shifted;
 						}
 					?>
                     <table class="data display datatable" id="example">
@@ -58,15 +71,19 @@
 							<td><a href="customer.php?customerid=<?php echo $result['customer_id'] ?>">View Customer</a></td>
 							<td>
 								<?php
-								 	if($result['status'] == 0){
+								if($result['status'] == 0){
 								?>
-									<a href="?shiftid=<?php echo $result['id'] ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Shifted</a>
+									<a href="?shiftid=<?php echo $result['id'] ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Pending</a>
 								<?php
-									}else{
+								}else if($result['status'] == 1){
 								?>
-									<a href="shiftid=<?php echo $result['id'] ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Remote</a>
+									<?= 'Shifting' ?>
 								<?php
-									}
+								}else{
+								?>
+									<a href="?delid=<?php echo $result['id'] ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Remote</a>
+								<?php
+								}
 								?>
 							</td>
 						</tr>
