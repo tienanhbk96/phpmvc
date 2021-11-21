@@ -3,17 +3,13 @@
     // include 'inc/slider.php';
 ?>
 <?php
-    //  if(!isset($_GET['proid']) || $_GET['proid'] == NULL){
-    //     echo "<script> window.location = '404.php'</script>";
-    // }else{
-    //     $id = $_GET['proid'];
-    // }
-
-    // if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])){
-    //     $quantity = $_POST['quantity'];
-    //     $AddtoCart = $ct->add_to_cart($quantity, $id);
-        
-    // }
+     if(isset($_GET['orderid']) && $_GET['orderid'] == 'order'){
+         $customer_id = Session::get('customer_id');
+         $insertOrder = $ct->insertOrder($customer_id);
+         $delCart = $ct->dell_all_data_cart();
+         header('Location:success.php');
+    }
+    
 ?>
 <style>
     .box_left {
@@ -47,14 +43,15 @@
         padding: 2px;
     }
 
-    input.submit_order {
+    .submit_order {
+        display: inline-block;
         padding: 10px 70px;
         border: none;
         background: red;
         font-size: 25px;
         color: #fff;
         cursor: pointer;
-        margin: 10px;
+        margin: 20px;
     }
 </style>
 <form action="" method="post">
@@ -193,7 +190,7 @@
             </table>
             </div>
         </div>
-        <center><input type="submit" value="Order Now" name="order" class="submit_order"></center>
+        <center><a href="?orderid=order" class="submit_order">Order Now</a></center>
     </div>
 </form>
 <?php 
