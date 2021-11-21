@@ -122,6 +122,13 @@
                     }
                 ?>
                 <?php
+                    $customer_id = Session::get('customer_id');
+                    $check_order = $ct->check_order($customer_id);
+                    if($check_order){
+                        echo '<li><a href="orderdetail.php">Ordered</a></li>';
+                    }
+                ?>
+                <?php
                     $check_login = Session::get('customer_login');
                     if($check_login){
                         echo '<li><a href="profile.php">Profile</a> </li>';

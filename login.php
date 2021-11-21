@@ -5,7 +5,7 @@
 <?php
     $check_login = Session::get('customer_login');
     if($check_login){
-        header('Loacation:order.php');
+        header('Location:order.php');
     }
 ?>
 <?php

@@ -4,7 +4,7 @@
 <?php
     $check_login = Session::get('customer_login');
     if($check_login == false){
-        header('Loacation:login.php');
+        header('Location:login.php');
     }
 ?>
 <style>
