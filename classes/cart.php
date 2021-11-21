@@ -143,5 +143,23 @@
             $result = $this->db->select($query);
             return $result;
         }
+        
+        public function shifted($id, $time, $price){
+            $id = mysqli_real_escape_string($this->db->link, $id);
+            $time = mysqli_real_escape_string($this->db->link, $time);
+            $price = mysqli_real_escape_string($this->db->link, $price);
+            $query = "UPDATE tbl_order SET status = '1'
+                     WHERE id = '$id'
+                     AND price = '$price'
+                     AND date_order = '$time' ";
+            $result = $this->db->update($query);
+            if($result){
+                $alert = "<span class='success'>Order Update Successfully</span>";
+                return $alert;
+            }else{
+                $alert = "<span class='error'>Order Update  not Success</span>";
+                return $alert;
+            }
+        }
     }
 ?> 
