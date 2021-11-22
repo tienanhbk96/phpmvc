@@ -67,11 +67,10 @@
                                                 echo 'Pending';
                                             }else if($result['status'] == 1){
                                         ?>
-                                        <a href="?confirmid=<?php echo $customer_id ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Shifted</a>
-
+                                        <span>Shifted</span>
                                         <?php
                                         }else {
-                                            echo 'Confirmed';
+                                            echo 'Received';
                                         }
                                         ?>
                                     </td>
@@ -80,9 +79,13 @@
                                     ?>
                                         <td><?php echo 'N/A' ?></td>
                                     <?php
+                                    }else if($result['status'] == 1){
+                                    ?>
+                                       <td><a href="?confirmid=<?php echo $customer_id ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Confirmed</a></td>
+                                    <?php
                                     }else{
                                     ?>
-                                        <td><a onclick="return confirm('Are you want to delete')" href="?delcart=<?php echo $result['cartId'] ?>">Xóa</a></td>
+                                         <td>Received</td>
                                     <?php
                                     }
                                     ?>
