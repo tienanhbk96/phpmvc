@@ -7,7 +7,14 @@
      if($check_login == false){
          header('Location:login.php');
      }
-    
+
+	$ct = new cart();
+     if(isset($_GET['confirmid'])){
+		$id = $_GET['confirmid'];
+		$time = $_GET['time'];
+		$price = $_GET['price'];
+		$shifted_confirmed = $ct->shifted_confirmed($id, $time, $price);
+    }
 ?>
 <style>
     .box_left {
@@ -58,9 +65,13 @@
                                     <td><?php
                                             if($result['status'] == 0){
                                                 echo 'Pending';
-                                            }else{
-                                                echo 'Processed';
-                                            }
+                                            }else if($result['status'] == 1){
+                                        ?>
+                                        <span>Shifted</span>
+                                        <?php
+                                        }else {
+                                            echo 'Received';
+                                        }
                                         ?>
                                     </td>
                                     <?php
@@ -68,9 +79,13 @@
                                     ?>
                                         <td><?php echo 'N/A' ?></td>
                                     <?php
+                                    }else if($result['status'] == 1){
+                                    ?>
+                                       <td><a href="?confirmid=<?php echo $customer_id ?>&price=<?php echo $result['price'] ?>&time=<?php echo $result['date_order'] ?>" >Confirmed</a></td>
+                                    <?php
                                     }else{
                                     ?>
-                                        <td><a onclick="return confirm('Are you want to delete')" href="?delcart=<?php echo $result['cartId'] ?>">Xóa</a></td>
+                                         <td>Received</td>
                                     <?php
                                     }
                                     ?>
