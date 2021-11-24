@@ -17,7 +17,7 @@
             </div>
             <img src="web/images/contact.png" alt="" />
             <div class="clear"></div>
-        </div>
+        </div>  
         <div class="section group">
             <div class="col span_2_of_3">
                 <div class="contact-form">

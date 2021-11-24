@@ -106,7 +106,7 @@
                     </tr>
                     <tr>
                         <th>Grand Total :</th>
-                        <td>
+                        <td> 
                             <?php
                                 echo isset($grandTotal) ? '$'.$grandTotal : '0';
                             ?>
