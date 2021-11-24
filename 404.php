@@ -15,6 +15,7 @@
             <div class="cartpage">
                 <div class="not_found">
                     <h3>Page doesn't found</h3>
+                    <h3>Page doesn't found</h3>
                 </div>
             </div>
             
