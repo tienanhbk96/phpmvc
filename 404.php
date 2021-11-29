@@ -1,7 +1,27 @@
 <?php 
 	include 'inc/header.php';
 ?>
-
+<style>
+    .not_found {
+        font-size: 30px;
+        font-weight: bold;
+        color: red; 
+    }
+</style>
+<style>
+    .not_found {
+        font-size: 30px;
+        font-weight: bold;
+        color: red; 
+    }
+</style>
+<style>
+    .not_found {
+        font-size: 30px;
+        font-weight: bold;
+        color: red; 
+    }
+</style>
 <style>
     .not_found {
         font-size: 30px;
