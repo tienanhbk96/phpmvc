@@ -6,7 +6,7 @@
     .not_found {
         font-size: 30px;
         font-weight: bold;
-        color: red;
+        color: red; 
     }
 </style>
 <div class="main">
@@ -15,7 +15,6 @@
             <div class="cartpage">
                 <div class="not_found">
                     <h3>Page doesn't found</h3>
-                    <h3>Page doesn't found</h3> 
                 </div>
             </div>
             
@@ -25,4 +24,4 @@
 </div>
 <?php 
 	include 'inc/footer.php';
-?>
+?>  
